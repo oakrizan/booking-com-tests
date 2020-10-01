@@ -16,23 +16,30 @@ class AccountPage {
     private lateinit var guestHeader: GuestHeader
 
     private val header: SelenideElement = `$`(".nw-step-header")
-    private val email: SelenideElement = `$`("[type=email]")
+    private val emailField: SelenideElement = `$`("[type=email]")
     private val getStartedButton: SelenideElement = `$`("[type=submit]")
-    private val signOptsHref: SelenideElement = `$`("[class*=\"nw-link\"]")
 
     fun waitWhileReady() {
         topCookieWarning.waitWhileReady()
         guestHeader.waitWhileReady()
         header.shouldBe(visible)
-        email.shouldBe(visible)
+        emailField.shouldBe(visible)
         getStartedButton.shouldBe(visible)
+    }
+
+    fun validateAuthType() {
+
     }
 
     fun headerText(): String {
         return header.text()
     }
 
-    fun signOptsText(): String {
-        return signOptsHref.text()
+    fun enterEmail(email: String) {
+        emailField.`val`(email)
+    }
+
+    fun getStartedButtonClick() {
+        getStartedButton.click()
     }
 }
