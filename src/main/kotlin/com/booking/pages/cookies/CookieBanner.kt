@@ -16,6 +16,6 @@ class CookieBanner {
         wrapper.waitUntil(visible, TIMEOUT_LONG.value)
         acceptButton.waitUntil(exist, TIMEOUT_SHORT.value)
         acceptButton.click()
-        wrapper.waitUntil(not(visible), TIMEOUT_SHORT.value)
+        wrapper.waitUntil(disappear, TIMEOUT_SHORT.value)
     }
 }

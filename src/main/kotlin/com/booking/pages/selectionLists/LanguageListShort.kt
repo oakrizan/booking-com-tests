@@ -32,4 +32,8 @@ class LanguageListShort {
                 .first()
         element.click()
     }
+
+    fun close() {
+        closeButton.click()
+    }
 }

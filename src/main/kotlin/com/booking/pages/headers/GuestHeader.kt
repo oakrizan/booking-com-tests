@@ -30,5 +30,6 @@ class GuestHeader {
         if (!languageListShort.selectedLanguage().contentEquals(lang.fullLangName)) {
             languageListShort.selectLanguage(lang)
         }
+        languageListShort.close()
     }
 }
