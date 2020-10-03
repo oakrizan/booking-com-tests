@@ -1,4 +1,9 @@
 Feature: AccountCreation
+  Background: Set up environment
+    Given launch browser url: https://account.booking.com/register
+    And close cookies banner
+    And select English language //if not yet English
+
   Scenario: Account creation
     Given I am in Sign Up page
     When I enter valid user email

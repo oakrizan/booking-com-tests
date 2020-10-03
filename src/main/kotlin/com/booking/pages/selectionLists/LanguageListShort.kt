@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component
 class LanguageListShort {
     private val wrapper: SelenideElement = `$`(".bui-modal__header")
     private val selectedLang: SelenideElement = `$`(".bui-list-item--active")
-//    private val selectedLang: SelenideElement = `$`(".bui-list-item--active .bui-traveller-header__selection-text")
+//    private val selectedLang: SelenideElement = `$`(".bui-list-item--active [class$=selection-text]")
     private val closeButton: SelenideElement = `$`(".bui-modal__close")
     private val languageList: ElementsCollection = `$$`(".bui-traveller-header__selection-text")
 
@@ -22,12 +22,11 @@ class LanguageListShort {
         closeButton.shouldBe(visible)
     }
 
-    fun currentLanguage(): String {
+    fun selectedLanguage(): String {
         return selectedLang.text()
     }
 
     fun selectLanguage(language: Language) {
-        //TODO - refactor
         val element: SelenideElement = languageList.asSequence()
                 .filter { it.text()!!.contentEquals(language.fullLangName) }
                 .first()

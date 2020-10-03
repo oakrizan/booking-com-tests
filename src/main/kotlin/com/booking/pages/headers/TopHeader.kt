@@ -33,7 +33,7 @@ class TopHeader {
         registerButton.shouldBe(visible)
     }
 
-    fun getSelectedCurrency(): String {
+    fun currentCurrency(): String {
         selectedCurrency.shouldBe(visible)
         return selectedCurrency.value
     }

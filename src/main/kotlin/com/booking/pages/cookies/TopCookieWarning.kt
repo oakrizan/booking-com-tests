@@ -18,7 +18,7 @@ class TopCookieWarning {
         closeButton.shouldBe(visible)
     }
 
-    fun closeCookies() {
+    fun close() {
         wrapper.shouldBe(visible)
         closeButton.click()
     }
