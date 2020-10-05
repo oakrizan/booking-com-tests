@@ -12,13 +12,10 @@ class TopCookieWarning {
     private val warnLink: SelenideElement = `$`(".cookie-warning__link")
     private val closeButton: SelenideElement = `$`(".cookie-warning__close")
 
-    fun waitWhileReady() {
+    fun close() {
         wrapper.waitUntil(visible, TIMEOUT_SHORT.value)
         warnLink.shouldBe(visible)
         closeButton.shouldBe(visible)
-    }
-
-    fun close() {
         wrapper.shouldBe(visible)
         closeButton.click()
     }

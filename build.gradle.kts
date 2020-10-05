@@ -38,13 +38,14 @@ dependencies {
     implementation("com.codeborne:selenide:5.10.0")
     implementation("com.sun.xml.bind:jaxb-osgi:2.3.2")
     implementation("org.springframework.boot:spring-boot-configuration-processor")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.+")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.+")
     implementation("io.github.serpro69:kotlin-faker:1.5.0")
 
     testImplementation("org.assertj:assertj-core:3.11.1")
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.junit.vintage:junit-vintage-engine")
     testImplementation("io.cucumber:cucumber-java8:6.7.0")
+    testImplementation("io.cucumber:cucumber-java:6.7.0")
     testImplementation("io.cucumber:cucumber-junit:6.7.0")
     testImplementation("io.cucumber:cucumber-core:6.7.0")
     testImplementation("io.cucumber:cucumber-spring:6.7.0")
@@ -93,9 +94,35 @@ tasks {
     }
 }
 
+val cucumberRuntime by configurations.creating {
+    extendsFrom(configurations["testImplementation"])
+}
+
+configurations.all {
+    if (name.contains("cucumberRuntime")) {
+        attributes.attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage::class.java, Usage.JAVA_RUNTIME))
+    }
+}
+
+task("cucumber") {
+    dependsOn("assemble")
+    dependsOn("compileTestJava")
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = cucumberRuntime + sourceSets.main.get().output + sourceSets.test.get().output
+            args = listOf("--plugin", "pretty", "--glue", "com.booking.selenide", "src/test/resources")
+        }
+    }
+}
+
 tasks.withType<BootJar> {
     enabled = false
 }
 tasks.withType<Jar> {
     enabled = false
+}
+
+tasks.withType<Test> {
+    maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
 }

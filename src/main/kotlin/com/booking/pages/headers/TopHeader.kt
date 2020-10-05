@@ -41,12 +41,12 @@ class TopHeader {
         addPropertyButton.shouldBe(visible)
     }
 
-    fun register(): SelenideElement {
-        return registerButton
+    fun register() {
+        registerButton.click()
     }
 
-    fun signIn(): SelenideElement {
-        return signInButton
+    fun signIn() {
+       signInButton.click()
     }
 
     fun userFirstName(): String {
