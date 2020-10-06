@@ -1,8 +1,8 @@
 Feature: AccountCreation
   Background: Set up environment
     Given launch browser url: https://account.booking.com/register
-    And close cookies banner
-    And select English language
+    And close cookie warning
+    And select EN_US language
 
   Scenario: Account creation
     Given I am in Sign Up page
@@ -14,3 +14,4 @@ Feature: AccountCreation
     And I click on “My Dashboard” button under account menu
     Then “My Dashboard” page is opened
     And correct value is prefilled in email verification placeholder //based on registered email
+    And tear down

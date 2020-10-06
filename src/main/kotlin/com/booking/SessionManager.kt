@@ -6,7 +6,11 @@ import org.springframework.stereotype.Component
 @Component
 class SessionManager {
     fun setup(url: String) {
-        Selenide.clearBrowserCookies()
         Selenide.open(url)
+    }
+
+    fun tearDown() {
+        Selenide.clearBrowserCookies()
+        Selenide.closeWebDriver()
     }
 }

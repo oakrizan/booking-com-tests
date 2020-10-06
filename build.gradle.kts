@@ -39,7 +39,7 @@ dependencies {
     implementation("com.sun.xml.bind:jaxb-osgi:2.3.2")
     implementation("org.springframework.boot:spring-boot-configuration-processor")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.+")
-    implementation("io.github.serpro69:kotlin-faker:1.5.0")
+    implementation("io.github.serpro69:kotlin-faker:1.4.0")
 
     testImplementation("org.assertj:assertj-core:3.11.1")
     testImplementation("org.junit.jupiter:junit-jupiter")
