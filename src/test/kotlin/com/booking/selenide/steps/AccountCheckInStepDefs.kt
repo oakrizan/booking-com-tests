@@ -26,14 +26,11 @@ class AccountCheckInStepDefs: En {
         val signInStrategy = mapOf(1 to "Sign in", 2 to "Enter your password")
         val strategies = mapOf("Sign Up" to registerStrategy, "Sign In" to signInStrategy)
 
-//        Given("^I am in Account Sign Up page$") {
         Given("I am in Account {} page") { page: String ->
-            guestHeader.waitWhileReady()
             accountCheckIn.email().waitUntil(visible, TIMEOUT_SHORT.value)
             val actualHeaderText: String = accountCheckIn.stepHeaderText()
-//            val expectedHeaderText: RegStepHeader = NEW_ACC_STEP_1
-//            assertTrue(actualHeaderText.contentEquals(expectedHeaderText.stepText), errorMsg(expectedHeaderText, actualHeaderText))
             val expectedHeaderText = strategies.getValue(page).getValue(1)
+            //TODO  - move errMsg o util
             assertTrue(actualHeaderText.contentEquals(expectedHeaderText), errorMsg(expectedHeaderText, actualHeaderText))
 
         }
@@ -45,7 +42,7 @@ class AccountCheckInStepDefs: En {
             accountCheckIn.submit()
             accountCheckIn.enterPassword("this_is-secret1!")
             accountCheckIn.submit()
-            topHeader.waitWhileReady()
+            topHeader.waitWhileNoAuthReady()
             topHeader.selectCurrency(US_DOLLAR)
         }
 

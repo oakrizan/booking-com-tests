@@ -1,6 +1,5 @@
 package com.booking.pages.main
 
-import com.booking.util.AccountNavigationItem
 import com.booking.util.AccountNavigationItem.DASHBOARD
 import com.booking.util.Timeout.TIMEOUT_LONG
 import com.codeborne.selenide.Condition.visible
@@ -10,6 +9,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.springframework.stereotype.Component
 
 @Component
+//TODO - remove
 class AccountDashboard {
     private val profileNavigation: SelenideElement = `$`(".profile-area__nav")
     private val selectedItem: SelenideElement = `$`(".selected")

@@ -7,7 +7,7 @@ import com.codeborne.selenide.SelenideElement
 import org.springframework.stereotype.Component
 
 @Component
-class StaysMainPage constructor() {
+class StaysMainPage {
     private val searchBox: SelenideElement = `$`(".xpi__searchbox")
     private val destination: SelenideElement = `$`("#ss")
     private val checkInDate: SelenideElement = `$`("[data-calendar2-type=checkin]")

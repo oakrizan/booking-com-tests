@@ -8,6 +8,7 @@ import com.codeborne.selenide.SelenideElement
 import org.springframework.stereotype.Component
 
 @Component
+//TODO Remove
 class LangMenuLong {
     private val wrapper: SelenideElement = `$`(".bui-modal__slot")
     private val langSelector: String = "[lang=%s]"

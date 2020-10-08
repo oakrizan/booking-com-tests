@@ -93,42 +93,25 @@ configure<AllureExtension> {
 }
 
 tasks {
-//    val consoleLauncherTest by registering(JavaExec::class) {
-//        dependsOn(testClasses)
-//        val reportsDir = file("$buildDir/test-results")
-//        outputs.dir(reportsDir)
-//        classpath = sourceSets["test"].runtimeClasspath
-//        main = "org.junit.platform.console.ConsoleLauncher"
-//        args("--scan-classpath")
-//        args("--include-engine", "cucumber")
-//        args("--reports-dir", reportsDir)
-//    }
-//
-//    test {
-//        dependsOn(consoleLauncherTest)
-//        exclude("**/*")
-//    }
     test {
-//        systemProperties(System.getProperties().toMap() as Map<String, Any>)
-//        systemProperty("cucumber.execution.parallel.enabled", System.getProperty("test.parallel"))
         useJUnitPlatform()
-//        testLogging {
-//            showExceptions = true
-//            exceptionFormat = FULL
-//            showStackTraces = true
-//        }
+        testLogging {
+            events( "passed", "skipped", "failed" )
+            showExceptions = true
+            exceptionFormat = FULL
+            showStackTraces = true
+        }
 
-//        if (project.hasProperty("browser")) {
-//            systemProperty("browser", project.property("browser") ?: "chrome")
-//        }
-//        systemProperty("selenide.headless", "false")
-//        if (project.hasProperty("grid")) {
-//            systemProperty("browser.remote", "true")
-//            systemProperty("selenide.remote", "http://${project.property("grid")}:4444/wd/hub")
-//        }
+        if (project.hasProperty("browser")) {
+            systemProperty("selenide.browser", project.property("browser") ?: "chrome")
+        }
+        systemProperty("selenide.headless", "false")
+        if (project.hasProperty("grid")) {
+            systemProperty("browser.remote", "true")
+            systemProperty("selenide.remote", "http://${project.property("grid")}:4444/wd/hub")
+        }
     }
 }
-
 val cucumberRuntime by configurations.creating {
     extendsFrom(configurations["testImplementation"])
 }
@@ -139,17 +122,17 @@ configurations.all {
     }
 }
 
-//task("cucumber") {
-//    dependsOn("assemble")
-//    dependsOn("compileTestJava")
-//    doLast {
-//        javaexec {
-//            main = "io.cucumber.core.cli.Main"
-//            classpath = cucumberRuntime + sourceSets.main.get().output + sourceSets.test.get().output
-//            args = listOf("--plugin", "pretty", "--glue", "com.booking.selenide", "src/test/resources")
-//        }
-//    }
-//}
+task("cucumber") {
+    dependsOn("assemble")
+    dependsOn("compileTestJava")
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = cucumberRuntime + sourceSets.main.get().output + sourceSets.test.get().output
+            args = listOf("--plugin", "pretty", "--glue", "com.booking.selenide", "src/test/resources")
+        }
+    }
+}
 
 tasks.withType<BootJar> {
     enabled = false
@@ -157,8 +140,3 @@ tasks.withType<BootJar> {
 tasks.withType<Jar> {
     enabled = false
 }
-//tasks.withType<Test> {
-//    maxParallelForks = 2
-
-//    maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
-//}

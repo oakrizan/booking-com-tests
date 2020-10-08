@@ -8,13 +8,10 @@ import com.booking.pages.cookies.TopCookieWarning
 import com.booking.pages.headers.GuestHeader
 import com.booking.pages.headers.TopHeader
 import com.booking.pages.main.AccountDashboard
+import com.booking.pages.main.AccountSettings
 import com.booking.pages.main.StaysMainPage
 import com.booking.pages.popups.RegSuccessPopup
-import com.booking.util.Currency
-import com.booking.util.Language
-import com.booking.util.ProfileMenuCategory.DASHBOARD
-import com.codeborne.selenide.Condition.visible
-import com.codeborne.selenide.Selenide
+import com.booking.util.ProfileMenuCategory.ACCOUNT
 import io.cucumber.java8.En
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.springframework.beans.factory.annotation.Autowired
@@ -40,13 +37,12 @@ class StepDefinitions: En {
     private lateinit var accountDashboard: AccountDashboard
     @Autowired
     private lateinit var dataProvider: DataProvider
+    @Autowired
+    private lateinit var accountSettings: AccountSettings
 
     private var email: String = ""
 
     init {
-        //Language and Currency selection
-
-
         Given("^I enter valid user email$") {
             email = dataProvider.generateEmail()
             accountCheckIn.enterEmail(email)
@@ -54,33 +50,35 @@ class StepDefinitions: En {
 
         And("^I am on Main page$") {
             staysMainPage.waitWhileReady()
-            topHeader.waitWhileReady()
+            topHeader.waitWhileNoAuthReady()
         }
 
         And("^main page is opened$") {
-            cookieBanner.acceptCookie()
-            regSuccessPopup.close()
+//            cookieBanner.acceptCookie()
+            if (regSuccessPopup.isDisplayed()) {
+                regSuccessPopup.close()
+            }
             staysMainPage.waitWhileReady()
-            topHeader.waitWhileReady()
-            assertTrue { topHeader.userFirstName().contentEquals("Your account") }
+            topHeader.waitWhileAuthReady()
+//            topHeader.waitWhileNoAuthReady()
         }
-        And("^I click on “My Dashboard” button under account menu$") {
-            topHeader.openProfile(DASHBOARD)
+
+        And("^I click on “Manage Account” button under account menu$") {
+            topHeader.openProfile(ACCOUNT)
         }
-        Then("^“My Dashboard” page is opened$") {
-            accountDashboard.waitWhileReady()
-            accountDashboard.emailConfirmationBanner().shouldBe(visible)
+        Then("^“Account Settings” page is opened$") {
+           accountSettings.waitWhileReady()
         }
         And("^correct value is prefilled in email verification placeholder //based on registered email") {
 //        And("^correct value is prefilled in email verification placeholder (//.*)?$$") {
-            assertTrue { accountDashboard.emailToConfirm()!!.contentEquals(email) }
+            assertTrue (accountSettings.emailToConfirm().contentEquals(email))
         }
 
-        Given("^click Sign In button$") {
+        Given("^I click Sign In button$") {
             topHeader.signIn()
         }
 
-        Given("^click Register button$") {
+        Given("^I click Register button$") {
             topHeader.register()
         }
     }

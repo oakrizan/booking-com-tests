@@ -16,12 +16,12 @@ class LangCurrencySelectionStepDefs: En {
     init {
         //Main Page Top Header
         Given("select {} language") { lang: Language ->
-            topHeader.waitWhileReady()
+            topHeader.waitWhileNoAuthReady()
             topHeader.selectLanguage(lang)
         }
 
         Given("select {} currency") { currency: Currency ->
-            topHeader.waitWhileReady()
+            topHeader.waitWhileNoAuthReady()
             topHeader.selectCurrency(currency)
         }
 

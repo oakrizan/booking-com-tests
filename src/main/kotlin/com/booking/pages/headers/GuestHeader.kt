@@ -1,6 +1,6 @@
 package com.booking.pages.headers
 
-import com.booking.pages.selectionLists.LangMenuShort
+import com.booking.pages.selectionLists.ModalMenu
 import com.booking.util.Language
 import com.booking.util.Timeout.TIMEOUT_SHORT
 import com.codeborne.selenide.Condition.visible
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 @Component
 class GuestHeader {
     @Autowired
-    private lateinit var langMenuShort: LangMenuShort
+    private lateinit var menu: ModalMenu
     private var wrapper: SelenideElement = `$`(".guest-header")
     private var logo: SelenideElement = `$`(".icon-logo")
     private var langButton: SelenideElement = `$`(".guest-header .bui-button")
@@ -25,8 +25,7 @@ class GuestHeader {
 
     fun selectLanguage(lang: Language) {
         langButton.click()
-        langMenuShort.waitWhileReady()
-        langMenuShort.selectLanguage(lang)
-        langMenuShort.close()
+        menu.waitWhileReady()
+        menu.selectLanguageByName(lang)
     }
 }

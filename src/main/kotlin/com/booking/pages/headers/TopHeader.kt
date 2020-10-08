@@ -11,6 +11,8 @@ import com.codeborne.selenide.Selenide
 import com.codeborne.selenide.Selenide.`$$`
 import com.codeborne.selenide.Selenide.`$`
 import com.codeborne.selenide.SelenideElement
+import org.openqa.selenium.By
+import org.openqa.selenium.By.id
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -19,26 +21,36 @@ class TopHeader {
     @Autowired
     private lateinit var modalMenu: ModalMenu
 
+    //Unauthorized state
     private val wrapper: SelenideElement = `$`(".bui-header")
+//    private val wrapperNoAuth: SelenideElement = `$`(".bui-header")
     private val logo: SelenideElement = `$`(".-logos-booking-logo-inv")
-    private val currencyButton: SelenideElement = `$`("[data-modal-id=currency-selection]")
-    private val langButton: SelenideElement = `$`("[data-modal-id=language-selection]")
-//    private val registerButton = `$`("#current_account_create")
-//    private val signInButton = `$`("#current_account")
-    private val buttons: ElementsCollection = `$$`(".bui-button__text")
-    //Profile Menu
-    private val profileMenuButton: SelenideElement = `$`("#profile-menu-trigger--content")
-    private val userFirstName: SelenideElement = `$`(".user_firstname")
-    private val profileMenu: SelenideElement = `$`(".fly-dropdown--profile-menu")
-    private val profileMenuItems: ElementsCollection = `$$`(".profile-menu__item")
+//    private val logoNoAuth: SelenideElement = `$`(".-logos-booking-logo-inv")
+    private val currencyButtonNoAuth: SelenideElement = `$`("[data-modal-id=currency-selection]")
+    private val langButtonNoAuth: SelenideElement = `$`("[data-modal-id=language-selection]")
+    private val buttons: ElementsCollection = `$$`(".bui-button")
 
-    fun waitWhileReady() {
+    //Authorized state
+//    private val wrapperAuth: SelenideElement = `$`(id("top"))
+    private val logoAuth: SelenideElement = `$`(id("logo_no_globe_new_logo"))
+
+    //Profile Menu
+    private val profileMenuButton: SelenideElement = `$`("[aria-describedby^=profile-menu]")
+    private val profileMenu: SelenideElement = `$`(".bui-dropdown__content")
+    private val profileMenuItems: ElementsCollection = `$$`(".bui-dropdown-menu__text")
+
+    fun waitWhileNoAuthReady() {
         //TODO refactor
         Selenide.sleep(4000)
         wrapper.waitUntil(visible, TIMEOUT_SHORT.value)
         logo.should(exist)
-        currencyButton.should(exist)
-        langButton.should(exist)
+        currencyButtonNoAuth.should(exist)
+        langButtonNoAuth.should(exist)
+    }
+
+    fun waitWhileAuthReady() {
+        wrapper.waitUntil(visible, TIMEOUT_SHORT.value)
+        logo.should(exist)
     }
 
     //TODO refactor - common util methos to filter and click
@@ -57,10 +69,6 @@ class TopHeader {
         element.click()
     }
 
-    fun userFirstName(): String {
-        return userFirstName.text()
-    }
-
     //TODO refactor - common util methos to filter and click
     fun openProfile(category: ProfileMenuCategory) {
         profileMenuButton.click()
@@ -72,14 +80,14 @@ class TopHeader {
     }
 
     fun selectCurrency(currCode: Currency) {
-        currencyButton.waitUntil(visible, TIMEOUT_SHORT.value)
-        currencyButton.click()
+        currencyButtonNoAuth.waitUntil(visible, TIMEOUT_SHORT.value)
+        currencyButtonNoAuth.click()
         modalMenu.selectCurrency(currCode)
     }
 
     fun selectLanguage(langCode: Language) {
-        langButton.waitUntil(visible, TIMEOUT_SHORT.value)
-        langButton.click()
-        modalMenu.selectLanguage(langCode)
+        langButtonNoAuth.waitUntil(visible, TIMEOUT_SHORT.value)
+        langButtonNoAuth.click()
+        modalMenu.selectLanguageByName(langCode)
     }
 }

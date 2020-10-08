@@ -11,6 +11,7 @@ import com.codeborne.selenide.SelenideElement
 import org.springframework.stereotype.Component
 
 @Component
+//TODO remove
 class LangMenuShort {
     private val wrapper: SelenideElement = `$`(".bui-modal__header")
     private val selectedLang: SelenideElement = `$`(".bui-list-item--active")
