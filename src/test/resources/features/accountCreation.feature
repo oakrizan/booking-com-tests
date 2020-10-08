@@ -1,14 +1,14 @@
 Feature: AccountCreation
   Background: Set up environment
     Given launch browser url: https://account.booking.com/register
-    And close cookie warning
-    And select EN_US language
+    And close cookies warning
+    And select EN_US language on Account Page
 
   Scenario: Account creation
-    Given I am in Sign Up page
+    Given I am in Account Sign Up page
     When I enter valid user email
     And click on “GET STARTED” button
-    And I enter valid password
+    And I enter valid password: this_is-secret1!
     And click on “Create Account” button
     And main page is opened
     And I click on “My Dashboard” button under account menu

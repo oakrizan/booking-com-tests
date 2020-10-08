@@ -21,7 +21,7 @@ class AccountDashboard {
     fun waitWhileReady() {
         accountCard.waitUntil(visible, TIMEOUT_LONG.value)
         profileNavigation.shouldBe(visible)
-        assertTrue { selectedItem.text()!!.contentEquals(DASHBOARD.itemName) }
+        assertTrue { selectedItem.text().contentEquals(DASHBOARD.itemName) }
         dealSearch.shouldBe(visible)
     }
 
@@ -29,7 +29,7 @@ class AccountDashboard {
         return emailConfirmationBanner
     }
 
-    fun emailToConfirm(): String {
+    fun emailToConfirm(): String? {
         return emailToConfirm.value
     }
 }

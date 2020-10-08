@@ -6,7 +6,7 @@ import com.codeborne.selenide.SelenideElement
 import org.springframework.stereotype.Component
 
 @Component
-class Registration {
+class AccountCheckIn {
     private val stepHeader: SelenideElement = `$`(".nw-step-header")
     private val emailField: SelenideElement = `$`("[type=email]")
     private val submitButton: SelenideElement = `$`("[type=submit]")
@@ -31,6 +31,10 @@ class Registration {
 
     fun password(): SelenideElement {
         return passwordField
+    }
+
+    fun enterPassword(password: String) {
+        passwordField.`val`(password)
     }
 
     fun createPassword(password: String) {

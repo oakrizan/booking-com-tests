@@ -1,17 +1,22 @@
 import com.diffplug.gradle.spotless.SpotlessExtension
+import io.qameta.allure.gradle.AllureExtension
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
+val allureVersion by extra("2.13.6")
+
 plugins {
     kotlin("jvm") version "1.3.61"
 
+    id("io.qameta.allure") version "2.8.1"
     id("com.diffplug.gradle.spotless") version "3.15.0"
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
     id("org.springframework.boot") version "2.2.4.RELEASE"
 }
 
 apply(plugin = "kotlin")
+apply(plugin = "io.qameta.allure")
 apply(plugin = "org.springframework.boot")
 apply(plugin = "io.spring.dependency-management")
 
@@ -35,20 +40,22 @@ ext {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("com.codeborne:selenide:5.10.0")
+    implementation("com.codeborne:selenide:5.15.1")
     implementation("com.sun.xml.bind:jaxb-osgi:2.3.2")
     implementation("org.springframework.boot:spring-boot-configuration-processor")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.+")
     implementation("io.github.serpro69:kotlin-faker:1.4.0")
+    implementation("io.qameta.allure:allure-selenide:$allureVersion")
+    implementation("io.qameta.allure:allure-cucumber-jvm:2.13.6")
 
     testImplementation("org.assertj:assertj-core:3.11.1")
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.junit.vintage:junit-vintage-engine")
-    testImplementation("io.cucumber:cucumber-java8:6.7.0")
-    testImplementation("io.cucumber:cucumber-java:6.7.0")
-    testImplementation("io.cucumber:cucumber-junit:6.7.0")
-    testImplementation("io.cucumber:cucumber-core:6.7.0")
     testImplementation("io.cucumber:cucumber-spring:6.7.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:latest.release")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:latest.release")
+    testImplementation("io.cucumber:cucumber-java8:latest.release")
+    testImplementation("io.cucumber:cucumber-junit-platform-engine:latest.release")
 
     api("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "junit")
@@ -74,23 +81,51 @@ configure<SpotlessExtension> {
     }
 }
 
-tasks {
-    test {
-        useJUnitPlatform()
-        testLogging {
-            showExceptions = true
-            exceptionFormat = FULL
-            showStackTraces = true
-        }
+configure<AllureExtension> {
+    val allureResultsDir = "allure-results"
+    val allureReportDir = "allure-report"
+    version = allureVersion
+    resultsDir = file("$rootDir/$allureResultsDir")
+    reportDir = file("$rootDir/$allureReportDir")
+    useJUnit5 {
+        version = allureVersion
+    }
+}
 
-        if (project.hasProperty("browser")) {
-            systemProperty("browser", project.property("browser") ?: "chrome")
-        }
-        systemProperty("selenide.headless", "false")
-        if (project.hasProperty("grid")) {
-            systemProperty("browser.remote", "true")
-            systemProperty("selenide.remote", "http://${project.property("grid")}:4444/wd/hub")
-        }
+tasks {
+//    val consoleLauncherTest by registering(JavaExec::class) {
+//        dependsOn(testClasses)
+//        val reportsDir = file("$buildDir/test-results")
+//        outputs.dir(reportsDir)
+//        classpath = sourceSets["test"].runtimeClasspath
+//        main = "org.junit.platform.console.ConsoleLauncher"
+//        args("--scan-classpath")
+//        args("--include-engine", "cucumber")
+//        args("--reports-dir", reportsDir)
+//    }
+//
+//    test {
+//        dependsOn(consoleLauncherTest)
+//        exclude("**/*")
+//    }
+    test {
+//        systemProperties(System.getProperties().toMap() as Map<String, Any>)
+//        systemProperty("cucumber.execution.parallel.enabled", System.getProperty("test.parallel"))
+        useJUnitPlatform()
+//        testLogging {
+//            showExceptions = true
+//            exceptionFormat = FULL
+//            showStackTraces = true
+//        }
+
+//        if (project.hasProperty("browser")) {
+//            systemProperty("browser", project.property("browser") ?: "chrome")
+//        }
+//        systemProperty("selenide.headless", "false")
+//        if (project.hasProperty("grid")) {
+//            systemProperty("browser.remote", "true")
+//            systemProperty("selenide.remote", "http://${project.property("grid")}:4444/wd/hub")
+//        }
     }
 }
 
@@ -104,17 +139,17 @@ configurations.all {
     }
 }
 
-task("cucumber") {
-    dependsOn("assemble")
-    dependsOn("compileTestJava")
-    doLast {
-        javaexec {
-            main = "io.cucumber.core.cli.Main"
-            classpath = cucumberRuntime + sourceSets.main.get().output + sourceSets.test.get().output
-            args = listOf("--plugin", "pretty", "--glue", "com.booking.selenide", "src/test/resources")
-        }
-    }
-}
+//task("cucumber") {
+//    dependsOn("assemble")
+//    dependsOn("compileTestJava")
+//    doLast {
+//        javaexec {
+//            main = "io.cucumber.core.cli.Main"
+//            classpath = cucumberRuntime + sourceSets.main.get().output + sourceSets.test.get().output
+//            args = listOf("--plugin", "pretty", "--glue", "com.booking.selenide", "src/test/resources")
+//        }
+//    }
+//}
 
 tasks.withType<BootJar> {
     enabled = false
@@ -122,7 +157,8 @@ tasks.withType<BootJar> {
 tasks.withType<Jar> {
     enabled = false
 }
+//tasks.withType<Test> {
+//    maxParallelForks = 2
 
-tasks.withType<Test> {
-    maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
-}
+//    maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
+//}

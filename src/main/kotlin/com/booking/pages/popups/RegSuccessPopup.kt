@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class RegSuccessPopup {
-    private val wrapper: SelenideElement = `$`("[id\$=modal-name]")
+    private val wrapper: SelenideElement = `$`(".modal-wrapper")
     private val closeButton: SelenideElement = `$`(".modal-mask-closeBtn")
 
     fun close() {

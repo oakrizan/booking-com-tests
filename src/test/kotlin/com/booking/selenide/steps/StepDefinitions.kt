@@ -2,7 +2,7 @@ package com.booking.selenide.steps
 
 import com.booking.SessionManager
 import com.booking.dataProvider.DataProvider
-import com.booking.pages.access.Registration
+import com.booking.pages.access.AccountCheckIn
 import com.booking.pages.cookies.CookieBanner
 import com.booking.pages.cookies.TopCookieWarning
 import com.booking.pages.headers.GuestHeader
@@ -11,14 +11,8 @@ import com.booking.pages.main.AccountDashboard
 import com.booking.pages.main.StaysMainPage
 import com.booking.pages.popups.RegSuccessPopup
 import com.booking.util.Currency
-import com.booking.util.Currency.US_DOLLAR
 import com.booking.util.Language
 import com.booking.util.ProfileMenuCategory.DASHBOARD
-import com.booking.util.RegStepHeader
-import com.booking.util.RegStepHeader.*
-import com.booking.util.RegStepHeader.Companion.errorMsg
-import com.booking.util.Timeout
-import com.booking.util.Timeout.TIMEOUT_SHORT
 import com.codeborne.selenide.Condition.visible
 import com.codeborne.selenide.Selenide
 import io.cucumber.java8.En
@@ -29,7 +23,7 @@ class StepDefinitions: En {
     @Autowired
     private lateinit var guestHeader: GuestHeader
     @Autowired
-    private lateinit var registration: Registration
+    private lateinit var accountCheckIn: AccountCheckIn
     @Autowired
     private lateinit var cookieWarning: TopCookieWarning
     @Autowired
@@ -50,17 +44,11 @@ class StepDefinitions: En {
     private var email: String = ""
 
     init {
-        Given("launch browser url: {}") { url: String ->
-            sessionManager.setup(url)
-        }
-
-        Given("^close cookie warning$") {
-            cookieWarning.close()
-        }
-
+        //Language and Currency selection
+        //Main Page Top Header
         Given("select {} language") { lang: Language ->
-            guestHeader.waitWhileReady()
-            guestHeader.selectLanguage(lang)
+            topHeader.waitWhileReady()
+            topHeader.selectLanguage(lang)
         }
 
         Given("select {} currency") { currency: Currency ->
@@ -68,31 +56,22 @@ class StepDefinitions: En {
             topHeader.selectCurrency(currency)
         }
 
-        Given("^I am in Sign Up page$") {
-            registration.email().waitUntil(visible, TIMEOUT_SHORT.value)
-            val actualHeaderText: String = registration.stepHeaderText()
-            val expectedHeaderText: RegStepHeader = NEW_ACC_STEP_1
-            assertTrue( actualHeaderText.contentEquals(expectedHeaderText.stepText), errorMsg(expectedHeaderText, actualHeaderText))
+        //Account Guest Header
+        Given("select {} language on Account Page") { lang: Language ->
+            guestHeader.waitWhileReady()
+            guestHeader.selectLanguage(lang)
         }
 
         Given("^I enter valid user email$") {
             email = dataProvider.generateEmail()
-            registration.enterEmail(email)
+            accountCheckIn.enterEmail(email)
         }
 
-        Given("^click on “GET STARTED” button$") {
-            registration.submit()
+        And("^I am on Main page$") {
+            staysMainPage.waitWhileReady()
+            topHeader.waitWhileReady()
         }
 
-        Given("^I enter valid password$") {
-            registration.password().waitUntil(visible, TIMEOUT_SHORT.value)
-            //TODO refactor - same as validation for Sign In page
-            assertTrue { registration.stepHeaderText().contentEquals(NEW_ACC_STEP_2.stepText) }
-            registration.createPassword("this_is-secret1!")
-        }
-        And("^click on “Create Account” button$") {
-            registration.submit()
-        }
         And("^main page is opened$") {
             cookieBanner.acceptCookie()
             regSuccessPopup.close()
@@ -109,33 +88,15 @@ class StepDefinitions: En {
         }
         And("^correct value is prefilled in email verification placeholder //based on registered email") {
 //        And("^correct value is prefilled in email verification placeholder (//.*)?$$") {
-            assertTrue { accountDashboard.emailToConfirm().contentEquals(email) }
-        }
-        And("^close cookies banner$") {
-            cookieBanner.acceptCookie()
+            assertTrue { accountDashboard.emailToConfirm()!!.contentEquals(email) }
         }
 
-        And("^I am on Main page$") {
-            staysMainPage.waitWhileReady()
-            topHeader.waitWhileReady()
-        }
-
-        When("^I click Sign In button$") {
+        Given("^click Sign In button$") {
             topHeader.signIn()
         }
 
-        When("^I click Register button$") {
+        Given("^click Register button$") {
             topHeader.register()
-        }
-
-        Given("^I am in Sign In page$") {
-            guestHeader.waitWhileReady()
-            registration.email().waitUntil(visible, Timeout.TIMEOUT_LONG.value)
-            assertTrue { registration.stepHeaderText().contentEquals(SIGN_IN_STEP_1.stepText) }
-        }
-
-        Given("^tear down$") {
-            sessionManager.tearDown()
         }
     }
 }
