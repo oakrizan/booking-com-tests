@@ -45,22 +45,7 @@ class StepDefinitions: En {
 
     init {
         //Language and Currency selection
-        //Main Page Top Header
-        Given("select {} language") { lang: Language ->
-            topHeader.waitWhileReady()
-            topHeader.selectLanguage(lang)
-        }
 
-        Given("select {} currency") { currency: Currency ->
-            topHeader.waitWhileReady()
-            topHeader.selectCurrency(currency)
-        }
-
-        //Account Guest Header
-        Given("select {} language on Account Page") { lang: Language ->
-            guestHeader.waitWhileReady()
-            guestHeader.selectLanguage(lang)
-        }
 
         Given("^I enter valid user email$") {
             email = dataProvider.generateEmail()

@@ -1,3 +1,4 @@
+@newacc
 Feature: AccountCreation
   Background: Set up environment
     Given launch browser url: https://account.booking.com/register
