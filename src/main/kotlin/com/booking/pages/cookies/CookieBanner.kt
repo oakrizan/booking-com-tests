@@ -1,8 +1,7 @@
 package com.booking.pages.cookies
 
 import com.booking.util.enums.Timeout.TIMEOUT_SHORT
-import com.codeborne.selenide.Condition.disappear
-import com.codeborne.selenide.Condition.visible
+import com.codeborne.selenide.Condition.*
 import com.codeborne.selenide.Selenide.`$`
 import com.codeborne.selenide.SelenideElement
 import org.openqa.selenium.By.id
@@ -16,6 +15,6 @@ class CookieBanner {
     fun acceptCookie() {
         acceptButton.waitUntil(visible, TIMEOUT_SHORT.value)
         acceptButton.click()
-        acceptButton.waitUntil(disappear, TIMEOUT_SHORT.value)
+        acceptButton.waitUntil(hidden, TIMEOUT_SHORT.value)
     }
 }

@@ -54,6 +54,7 @@ dependencies {
     testImplementation("io.cucumber:cucumber-spring:6.7.0")
     testImplementation("org.junit.jupiter:junit-jupiter-api:latest.release")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:latest.release")
+    testImplementation("io.cucumber:cucumber-java:latest.release")
     testImplementation("io.cucumber:cucumber-java8:latest.release")
     testImplementation("io.cucumber:cucumber-junit-platform-engine:latest.release")
 
@@ -65,21 +66,21 @@ dependencies {
     }
 }
 
-configure<SpotlessExtension> {
-    format("misc") {
-        target("*/src/**/*.kt")
-        endWithNewline()
-        trimTrailingWhitespace()
-    }
-    kotlin {
-        target("*/src/**/*.kt")
-        ktlint("0.29.0")
-    }
-    kotlinGradle {
-        target("**/*gradle.kts")
-        ktlint("0.29.0")
-    }
-}
+//configure<SpotlessExtension> {
+//    format("misc") {
+//        target("*/src/**/*.kt")
+//        endWithNewline()
+//        trimTrailingWhitespace()
+//    }
+//    kotlin {
+//        target("*/src/**/*.kt")
+//        ktlint("0.29.0")
+//    }
+//    kotlinGradle {
+//        target("**/*gradle.kts")
+//        ktlint("0.29.0")
+//    }
+//}
 
 configure<AllureExtension> {
     val allureResultsDir = "allure-results"
