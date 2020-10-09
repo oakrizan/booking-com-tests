@@ -1,8 +1,8 @@
 package com.booking.pages.headers
 
 import com.booking.pages.selectionLists.ModalMenu
-import com.booking.util.Language
-import com.booking.util.Timeout.TIMEOUT_SHORT
+import com.booking.util.enums.Language
+import com.booking.util.enums.Timeout.TIMEOUT_SHORT
 import com.codeborne.selenide.Condition.visible
 import com.codeborne.selenide.Selenide.`$`
 import com.codeborne.selenide.SelenideElement

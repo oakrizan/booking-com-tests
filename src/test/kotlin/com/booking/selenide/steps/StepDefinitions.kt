@@ -1,17 +1,16 @@
 package com.booking.selenide.steps
 
-import com.booking.SessionManager
+import com.booking.util.SessionManager
 import com.booking.dataProvider.DataProvider
 import com.booking.pages.access.AccountCheckIn
 import com.booking.pages.cookies.CookieBanner
 import com.booking.pages.cookies.TopCookieWarning
 import com.booking.pages.headers.GuestHeader
 import com.booking.pages.headers.TopHeader
-import com.booking.pages.main.AccountDashboard
 import com.booking.pages.main.AccountSettings
 import com.booking.pages.main.StaysMainPage
 import com.booking.pages.popups.RegSuccessPopup
-import com.booking.util.ProfileMenuCategory.ACCOUNT
+import com.booking.util.enums.ProfileMenuCategory.ACCOUNT
 import io.cucumber.java8.En
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.springframework.beans.factory.annotation.Autowired
@@ -33,8 +32,6 @@ class StepDefinitions: En {
     private lateinit var staysMainPage: StaysMainPage
     @Autowired
     private lateinit var topHeader: TopHeader
-    @Autowired
-    private lateinit var accountDashboard: AccountDashboard
     @Autowired
     private lateinit var dataProvider: DataProvider
     @Autowired
@@ -81,5 +78,6 @@ class StepDefinitions: En {
         Given("^I click Register button$") {
             topHeader.register()
         }
+
     }
 }

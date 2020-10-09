@@ -2,8 +2,8 @@ package com.booking.selenide.steps
 
 import com.booking.pages.headers.GuestHeader
 import com.booking.pages.headers.TopHeader
-import com.booking.util.Currency
-import com.booking.util.Language
+import com.booking.util.enums.Currency
+import com.booking.util.enums.Language
 import io.cucumber.java8.En
 import org.springframework.beans.factory.annotation.Autowired
 

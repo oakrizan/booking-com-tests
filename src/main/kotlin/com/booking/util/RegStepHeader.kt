@@ -7,6 +7,7 @@ enum class RegStepHeader constructor(var stepText: String) {
     SIGN_IN_STEP_2("Enter your password");
 
     companion object {
+        //TODO - refactor - no emun class needed, errorMsg to util
 //        fun errorMsg(stepHeader: RegStepHeader, actual: String): String {
         fun errorMsg(expected: String, actual: String): String {
             return "Header text should be $expected, but was $actual"

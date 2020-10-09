@@ -1,6 +1,6 @@
 package com.booking.pages.headers
 
-import com.booking.util.Timeout.TIMEOUT_SHORT
+import com.booking.util.enums.Timeout.TIMEOUT_SHORT
 import com.codeborne.selenide.Condition.visible
 import com.codeborne.selenide.ElementsCollection
 import com.codeborne.selenide.Selenide.`$$`

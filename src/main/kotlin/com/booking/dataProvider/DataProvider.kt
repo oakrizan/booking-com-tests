@@ -8,6 +8,6 @@ class DataProvider {
     private val faker = Faker()
 
     fun generateEmail(): String {
-        return faker.internet.email()
+        return faker.internet.safeEmail()
     }
 }

@@ -1,4 +1,4 @@
-package com.booking.util
+package com.booking.util.enums
 
 enum class AccountNavigationItem constructor(var itemName: String) {
     DASHBOARD ("My Dashboard"),

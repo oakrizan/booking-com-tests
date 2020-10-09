@@ -1,6 +1,7 @@
 package com.booking.selenide.steps
 
-import com.booking.SessionManager
+import com.booking.util.SessionManager
+import com.codeborne.selenide.Selenide
 import io.cucumber.java8.En
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -18,6 +19,15 @@ class SessionManagerStepDefs: En {
 
         Given("^tear down$") {
             sessionManager.tearDown()
+        }
+
+        //Switching between Browser Tabs
+        Given("I switch to tab {}") { tabId: Int ->
+            Selenide.switchTo().window(tabId)
+        }
+
+        Given("I close current tab") {
+            Selenide.closeWindow()
         }
     }
 }

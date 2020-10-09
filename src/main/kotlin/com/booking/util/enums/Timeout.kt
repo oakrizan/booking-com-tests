@@ -1,4 +1,4 @@
-package com.booking.util
+package com.booking.util.enums
 
 enum class Timeout constructor(val value: Long) {
     TIMEOUT_LONG(3000),

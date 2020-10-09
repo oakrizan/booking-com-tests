@@ -1,6 +1,6 @@
 package com.booking.pages.selectionLists
 
-import com.booking.util.Currency
+import com.booking.util.enums.Currency
 import com.codeborne.selenide.Selenide.`$`
 import com.codeborne.selenide.SelenideElement
 import org.springframework.stereotype.Component

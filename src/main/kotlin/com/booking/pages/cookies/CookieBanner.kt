@@ -1,9 +1,8 @@
 package com.booking.pages.cookies
 
-import com.booking.util.Timeout.TIMEOUT_SHORT
+import com.booking.util.enums.Timeout.TIMEOUT_SHORT
 import com.codeborne.selenide.Condition.disappear
 import com.codeborne.selenide.Condition.visible
-import com.codeborne.selenide.Selenide
 import com.codeborne.selenide.Selenide.`$`
 import com.codeborne.selenide.SelenideElement
 import org.openqa.selenium.By.id
@@ -15,11 +14,8 @@ class CookieBanner {
     private val acceptButton: SelenideElement = `$`("#onetrust-button-group #onetrust-accept-btn-handler")
 
     fun acceptCookie() {
-        //TODO Refactor
-//        if (wrapper.exists()) {
-            acceptButton.waitUntil(visible, TIMEOUT_SHORT.value)
-            acceptButton.click()
-            acceptButton.waitUntil(disappear, TIMEOUT_SHORT.value)
-//        }
+        acceptButton.waitUntil(visible, TIMEOUT_SHORT.value)
+        acceptButton.click()
+        acceptButton.waitUntil(disappear, TIMEOUT_SHORT.value)
     }
 }

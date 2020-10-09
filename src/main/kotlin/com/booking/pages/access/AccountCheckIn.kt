@@ -12,6 +12,7 @@ class AccountCheckIn {
     private val submitButton: SelenideElement = `$`("[type=submit]")
     private val passwordField: SelenideElement = `$`("#password")
     private val passwordConfirmField: SelenideElement = `$`("#confirmed_password")
+    private val facebookButton: SelenideElement = `$`("[data-ga-label=facebook]")
 
     fun stepHeaderText(): String {
         return stepHeader.text()
@@ -42,5 +43,9 @@ class AccountCheckIn {
         passwordConfirmField.shouldBe(visible)
         passwordField.`val`(password)
         passwordConfirmField.`val`(password)
+    }
+
+    fun facebook(): SelenideElement {
+        return facebookButton
     }
 }

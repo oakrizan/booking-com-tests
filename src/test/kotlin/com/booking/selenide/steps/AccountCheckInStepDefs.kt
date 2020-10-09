@@ -1,13 +1,15 @@
 package com.booking.selenide.steps
 
 import com.booking.pages.access.AccountCheckIn
+import com.booking.pages.access.ThirdPartyCheckIn
 import com.booking.pages.headers.GuestHeader
 import com.booking.pages.headers.TopHeader
-import com.booking.util.Currency.US_DOLLAR
 import com.booking.util.RegStepHeader.Companion.errorMsg
 import com.booking.util.RegStepHeader.NEW_ACC_STEP_2
-import com.booking.util.Timeout.TIMEOUT_SHORT
+import com.booking.util.enums.Currency.US_DOLLAR
+import com.booking.util.enums.Timeout.TIMEOUT_SHORT
 import com.codeborne.selenide.Condition.visible
+import com.codeborne.selenide.Selenide
 import io.cucumber.java8.En
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,9 +21,10 @@ class AccountCheckInStepDefs: En {
     private lateinit var accountCheckIn: AccountCheckIn
     @Autowired
     private lateinit var topHeader: TopHeader
+    @Autowired
+    private lateinit var thirdPartyCheckIn: ThirdPartyCheckIn
 
     init {
-
         val registerStrategy = mapOf(1 to "Create your account", 2 to "Create password")
         val signInStrategy = mapOf(1 to "Sign in", 2 to "Enter your password")
         val strategies = mapOf("Sign Up" to registerStrategy, "Sign In" to signInStrategy)
@@ -61,6 +64,12 @@ class AccountCheckInStepDefs: En {
             accountCheckIn.submit()
         }
 
+        Given("^I go to Facebook Sign In$") {
+            accountCheckIn.facebook().click()
+        }
 
+        Given("^I am in Facebook Sign In page$") {
+            thirdPartyCheckIn.waitForFacebookForm()
+        }
     }
 }

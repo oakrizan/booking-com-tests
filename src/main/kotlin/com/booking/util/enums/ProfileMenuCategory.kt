@@ -1,4 +1,4 @@
-package com.booking.util
+package com.booking.util.enums
 
 enum class ProfileMenuCategory constructor(var text: String){
     ACCOUNT ("Manage account"),
