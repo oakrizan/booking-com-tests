@@ -1,5 +1,6 @@
 package com.booking
 
+import com.booking.util.Timeout.TIMEOUT_LONG
 import com.codeborne.selenide.Selenide
 import org.springframework.stereotype.Component
 
@@ -12,5 +13,9 @@ class SessionManager {
     fun tearDown() {
         Selenide.clearBrowserCookies()
         Selenide.closeWebDriver()
+    }
+
+    fun waitForPageReady() {
+        Selenide.sleep(TIMEOUT_LONG.value)
     }
 }

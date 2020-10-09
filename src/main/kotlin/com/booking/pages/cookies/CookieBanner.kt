@@ -15,12 +15,11 @@ class CookieBanner {
     private val acceptButton: SelenideElement = `$`("#onetrust-button-group #onetrust-accept-btn-handler")
 
     fun acceptCookie() {
-        if (wrapper.exists()) {
-            //TODO refactor
-            Selenide.sleep(1000)
+        //TODO Refactor
+//        if (wrapper.exists()) {
             acceptButton.waitUntil(visible, TIMEOUT_SHORT.value)
             acceptButton.click()
             acceptButton.waitUntil(disappear, TIMEOUT_SHORT.value)
-        }
+//        }
     }
 }
