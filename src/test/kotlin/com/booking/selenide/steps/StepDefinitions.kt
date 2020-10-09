@@ -50,7 +50,7 @@ class StepDefinitions: En {
 
         And("^I am on Main page$") {
             staysMainPage.waitWhileReady()
-            topHeader.waitWhileNoAuthReady()
+            topHeader.waitWhileReady()
         }
 
         And("^main page is opened$") {
@@ -59,7 +59,7 @@ class StepDefinitions: En {
                 regSuccessPopup.close()
             }
             staysMainPage.waitWhileReady()
-            topHeader.waitWhileAuthReady()
+            topHeader.waitWhileReady()
 //            topHeader.waitWhileNoAuthReady()
         }
 

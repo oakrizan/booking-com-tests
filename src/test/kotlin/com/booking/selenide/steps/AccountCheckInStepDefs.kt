@@ -42,7 +42,7 @@ class AccountCheckInStepDefs: En {
             accountCheckIn.submit()
             accountCheckIn.enterPassword("this_is-secret1!")
             accountCheckIn.submit()
-            topHeader.waitWhileNoAuthReady()
+            topHeader.waitWhileReady()
             topHeader.selectCurrency(US_DOLLAR)
         }
 
