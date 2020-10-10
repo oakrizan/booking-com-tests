@@ -8,18 +8,14 @@ import com.booking.util.enums.ProfileMenuCategory
 import com.booking.util.enums.Timeout.TIMEOUT_SHORT
 import com.codeborne.selenide.Condition.visible
 import com.codeborne.selenide.ElementsCollection
-import com.codeborne.selenide.Selenide
 import com.codeborne.selenide.Selenide.`$$`
 import com.codeborne.selenide.Selenide.`$`
 import com.codeborne.selenide.SelenideElement
 import com.codeborne.selenide.ex.ElementNotFound
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.openqa.selenium.By.id
-import org.openqa.selenium.Keys
-import org.openqa.selenium.Keys.CONTROL
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import java.awt.SystemColor.window
 
 
 @Component

@@ -1,6 +1,5 @@
 package com.booking.selenide.steps
 
-import com.booking.util.SessionManager
 import com.booking.dataProvider.DataProvider
 import com.booking.pages.access.AccountCheckIn
 import com.booking.pages.cookies.CookieBanner
@@ -10,6 +9,7 @@ import com.booking.pages.headers.TopHeader
 import com.booking.pages.main.AccountSettings
 import com.booking.pages.main.StaysMainPage
 import com.booking.pages.popups.RegSuccessPopup
+import com.booking.util.SessionManager
 import com.booking.util.enums.ProfileMenuCategory.ACCOUNT
 import io.cucumber.java8.En
 import org.junit.jupiter.api.Assertions.assertTrue

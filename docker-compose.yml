@@ -4,33 +4,31 @@ services:
     image: 'docker.io/bitnami/jenkins:2-debian-10'
     ports:
       - '80:8080'
-      - '443:8443'
-      - '50000:50000'
     volumes:
       - 'jenkins_data:/bitnami/jenkins'
 #  test:
 #    build: .
 #    depends_on:
 #      - hub
-#  hub:
-#    image: selenium/hub
-#    ports:
-#      - "4444:4444"
-#    environment:
-#      GRID_MAX_SESSION: 16
-#      GRID_BROWSER_TIMEOUT: 3000
-#      GRID_TIMEOUT: 3000
-#  firefox:
-#    image: selenium/node-firefox
-#    depends_on:
-#      - hub
-#    environment:
-#      HUB_PORT_4444_TCP_ADDR: hub
-#      HUB_PORT_4444_TCP_PORT: 4444
-#      NODE_MAX_SESSION: 4
-#      NODE_MAX_INSTANCES: 4
-#    volumes:
-#      - /dev/shm:/dev/shm
+  hub:
+    image: selenium/hub
+    ports:
+      - "4444:4444"
+    environment:
+      GRID_MAX_SESSION: 16
+      GRID_BROWSER_TIMEOUT: 3000
+      GRID_TIMEOUT: 3000
+  firefox:
+    image: selenium/node-firefox
+    depends_on:
+      - hub
+    environment:
+      HUB_PORT_4444_TCP_ADDR: hub
+      HUB_PORT_4444_TCP_PORT: 4444
+      NODE_MAX_SESSION: 4
+      NODE_MAX_INSTANCES: 4
+    volumes:
+      - /dev/shm:/dev/shm
 volumes:
   jenkins_data:
     driver: local

@@ -9,7 +9,6 @@ import com.booking.util.RegStepHeader.NEW_ACC_STEP_2
 import com.booking.util.enums.Currency.US_DOLLAR
 import com.booking.util.enums.Timeout.TIMEOUT_SHORT
 import com.codeborne.selenide.Condition.visible
-import com.codeborne.selenide.Selenide
 import io.cucumber.java8.En
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.springframework.beans.factory.annotation.Autowired
