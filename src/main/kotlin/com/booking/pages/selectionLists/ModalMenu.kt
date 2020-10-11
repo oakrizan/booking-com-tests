@@ -38,6 +38,10 @@ class ModalMenu {
         helper.findByText(languages, language.fullLangName).click()
     }
 
+    fun selectLangByCode(language: Language) {
+
+    }
+
     fun selectCurrencyByCode(currency: Currency) {
         helper.findByText(currencies, currency.code)
     }

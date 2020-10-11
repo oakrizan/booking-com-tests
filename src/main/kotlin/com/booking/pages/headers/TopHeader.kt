@@ -3,7 +3,6 @@ package com.booking.pages.headers
 import com.booking.pages.selectionLists.ModalMenu
 import com.booking.util.ElementHelper
 import com.booking.util.enums.Currency
-import com.booking.util.enums.Language
 import com.booking.util.enums.ProfileMenuCategory
 import com.booking.util.enums.Timeout.TIMEOUT_SHORT
 import com.codeborne.selenide.Condition.visible
@@ -40,9 +39,13 @@ class TopHeader {
     private val signInButton: SelenideElement = `$`(id("current_account"))
 
     //Profile Menu New UI
-    private val profileMenuButton: SelenideElement = `$`("[aria-describedby^=profile-menu]")
-    private val profileMenu: SelenideElement = `$`(".bui-dropdown__content")
-    private val profileMenuItems: ElementsCollection = `$$`(".bui-dropdown-menu__text")
+    private val profileMenuButtonBui: SelenideElement = `$`("[aria-describedby^=profile-menu]")
+    private val profileMenuBui: SelenideElement = `$`(".bui-dropdown__content")
+    private val profileMenuItemsBui: ElementsCollection = `$$`(".bui-dropdown-menu__text")
+    //Profile Menu Old UI
+    private val profileMenuButton: SelenideElement = `$`("#profile-menu-trigger--content")
+    private val profileMenu: SelenideElement = `$`(".fly-dropdown--profile-menu")
+    private val profileMenuItems: ElementsCollection = `$$`(".profile-menu__item")
 
     fun waitWhileReady() {
         try {
@@ -75,7 +78,17 @@ class TopHeader {
         }
     }
 
-    fun openProfile(category: ProfileMenuCategory) {
+    fun profileButtonBui(): SelenideElement {
+        return profileMenuButtonBui
+    }
+
+    fun openProfileShort(category: ProfileMenuCategory) {
+        profileMenuButtonBui.click()
+        profileMenuBui.waitUntil(visible, TIMEOUT_SHORT.value)
+        helper.findByText(profileMenuItemsBui, category.text).click()
+    }
+
+    fun openProfileLong(category: ProfileMenuCategory) {
         profileMenuButton.click()
         profileMenu.waitUntil(visible, TIMEOUT_SHORT.value)
         helper.findByText(profileMenuItems, category.text).click()
@@ -88,16 +101,6 @@ class TopHeader {
         } else {
             currencyButtonBui.click()
             modalMenu.selectCurrencyByCode(currCode)
-        }
-    }
-
-    fun selectLanguage(langCode: Language) {
-        if (langButton.exists()) {
-            langButton.click()
-            modalMenu.selectLangByCode(langCode)
-        } else {
-            langButtonBui.click()
-            modalMenu.selectLangByCode(langCode)
         }
     }
 }

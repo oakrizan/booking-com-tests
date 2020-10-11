@@ -2,6 +2,7 @@ package com.booking.selenide.steps
 
 import com.booking.dataProvider.DataProvider
 import com.booking.pages.access.AccountCheckIn
+import com.booking.pages.main.AccountDashboard
 import com.booking.pages.main.AccountSettings
 import io.cucumber.java8.En
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -14,6 +15,8 @@ class DataProviderStepDefs: En {
     private lateinit var dataProvider: DataProvider
     @Autowired
     private lateinit var accountSettings: AccountSettings
+    @Autowired
+    private lateinit var dashboard: AccountDashboard
 
     private var email: String = ""
 
@@ -24,7 +27,12 @@ class DataProviderStepDefs: En {
         }
 
         And("^correct value is prefilled in email verification placeholder //based on registered email") {
-            assertTrue(accountSettings.emailToConfirm().contentEquals(email))
+            if (accountSettings.emailField().exists()) {
+                assertTrue(accountSettings.emailToConfirm().contentEquals(email))
+            } else {
+                assertTrue(dashboard.emailToConfirm().contentEquals(email))
+
+            }
         }
     }
 }

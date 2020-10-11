@@ -30,6 +30,10 @@ class AccountSettings {
         assertTrue(bookHeader.text().contentEquals("For When You Book"))
     }
 
+    fun emailField(): SelenideElement {
+        return emailField
+    }
+
     fun emailToConfirm(): String {
         return emailField.value!!
     }
