@@ -33,10 +33,11 @@ class MainPageStepDefs: En {
 
         And("^main page is opened$") {
             sessionManager.waitForPageReady()
-            if (regSuccessPopup.isDisplayed()) {
+            regSuccessPopup.waitWhileReady()
+//            if (regSuccessPopup.isDisplayed()) {
                 regSuccessPopup.close()
-            }
-            staysMainPage.waitWhileReady()
+//            }
+//            staysMainPage.waitWhileReady()
             topHeader.waitWhileReady()
         }
 
