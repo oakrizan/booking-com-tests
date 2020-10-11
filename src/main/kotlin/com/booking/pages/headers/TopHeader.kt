@@ -17,7 +17,6 @@ import org.openqa.selenium.By.id
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
-
 @Component
 class TopHeader {
     @Autowired
@@ -25,14 +24,14 @@ class TopHeader {
     @Autowired
     private lateinit var helper: ElementHelper
 
-    //Unauthorized state
+    //New UI
     private val wrapperBui: SelenideElement = `$`(".bui-header")
     private val logoBui: SelenideElement = `$`(".-logos-booking-logo-inv")
     private val currencyButtonBui: SelenideElement = `$`("[data-modal-id=currency-selection]")
     private val langButtonBui: SelenideElement = `$`("[data-modal-id=language-selection]")
     private val buttons: ElementsCollection = `$$`(".bui-group .bui-button__text")
 
-    //Authorized state
+    //Old UI
     private val wrapper: SelenideElement = `$`(id("top"))
     private val logo: SelenideElement = `$`(id("logo_no_globe_new_logo"))
     private val currencyButton: SelenideElement = `$`("[data-id=currency_selector]")
@@ -40,7 +39,7 @@ class TopHeader {
     private val registerButton: SelenideElement = `$`(id("current_account_create"))
     private val signInButton: SelenideElement = `$`(id("current_account"))
 
-    //Profile Menu
+    //Profile Menu New UI
     private val profileMenuButton: SelenideElement = `$`("[aria-describedby^=profile-menu]")
     private val profileMenu: SelenideElement = `$`(".bui-dropdown__content")
     private val profileMenuItems: ElementsCollection = `$$`(".bui-dropdown-menu__text")
@@ -57,8 +56,6 @@ class TopHeader {
             logo.shouldBe(visible)
             currencyButton.shouldBe(visible)
             langButton.shouldBe(visible)
-            registerButton.shouldBe(visible)
-            signInButton.shouldBe(visible)
         }
     }
 
@@ -96,9 +93,7 @@ class TopHeader {
 
     fun selectLanguage(langCode: Language) {
         if (langButton.exists()) {
-            currencyButton.click()
-//            currencyButton.sendKeys(CONTROL)
-//                     Selenide.switchTo().window(1)
+            langButton.click()
             modalMenu.selectLangByCode(langCode)
         } else {
             langButtonBui.click()

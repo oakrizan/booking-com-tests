@@ -5,7 +5,8 @@ import com.booking.util.enums.Currency
 import com.booking.util.enums.Language
 import com.booking.util.enums.Timeout.TIMEOUT_LONG
 import com.booking.util.enums.Timeout.TIMEOUT_SHORT
-import com.codeborne.selenide.Condition.*
+import com.codeborne.selenide.Condition.disappear
+import com.codeborne.selenide.Condition.visible
 import com.codeborne.selenide.ElementsCollection
 import com.codeborne.selenide.Selenide.`$$`
 import com.codeborne.selenide.Selenide.`$`
@@ -24,7 +25,7 @@ class ModalMenu {
     private val languages: ElementsCollection = `$$`(".bui-traveller-header__selection-text")
 
     fun waitWhileReady() {
-        wrapper.waitUntil(appear, TIMEOUT_LONG.value)
+        wrapper.waitUntil(visible, TIMEOUT_LONG.value)
         closeButton.waitUntil(visible, TIMEOUT_SHORT.value)
     }
 
@@ -33,18 +34,10 @@ class ModalMenu {
         wrapper.waitUntil(disappear, TIMEOUT_SHORT.value)
     }
 
-    //TODO - validation that lang is selected
     fun selectLanguageByName(language: Language) {
         helper.findByText(languages, language.fullLangName).click()
     }
 
-    fun selectLangByCode(language: Language) {
-//        val selector = String.format(this.languages, language.code)
-//        wrapper.`$`(selector).click()
-    }
-
-    //TODO validation that currency is selected
-    //TODO - refactor as sequence to common method
     fun selectCurrencyByCode(currency: Currency) {
         helper.findByText(currencies, currency.code)
     }

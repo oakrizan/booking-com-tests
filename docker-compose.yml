@@ -1,11 +1,11 @@
 version: '2'
 services:
-  jenkins:
-    image: 'docker.io/bitnami/jenkins:2-debian-10'
-    ports:
-      - '80:8080'
-    volumes:
-      - 'jenkins_data:/bitnami/jenkins'
+#  jenkins:
+#    image: 'docker.io/bitnami/jenkins:2-debian-10'
+#    ports:
+#      - '80:8080'
+#    volumes:
+#      - 'jenkins_data:/bitnami/jenkins'
 #  test:
 #    build: .
 #    depends_on:

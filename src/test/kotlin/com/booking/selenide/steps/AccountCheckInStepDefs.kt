@@ -32,7 +32,6 @@ class AccountCheckInStepDefs: En {
             accountCheckIn.email().waitUntil(visible, TIMEOUT_SHORT.value)
             val actualHeaderText: String = accountCheckIn.stepHeaderText()
             val expectedHeaderText = strategies.getValue(page).getValue(1)
-            //TODO  - move errMsg o util
             assertTrue(actualHeaderText.contentEquals(expectedHeaderText), errorMsg(expectedHeaderText, actualHeaderText))
 
         }
@@ -54,7 +53,6 @@ class AccountCheckInStepDefs: En {
 
         Given("I enter valid password: {}") { passwd: String ->
             accountCheckIn.password().waitUntil(visible, TIMEOUT_SHORT.value)
-            //TODO refactor - same as validation for Sign In page
             assertTrue { accountCheckIn.stepHeaderText().contentEquals(NEW_ACC_STEP_2.stepText) }
             accountCheckIn.createPassword(passwd)
         }

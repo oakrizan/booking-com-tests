@@ -7,17 +7,17 @@ import org.springframework.stereotype.Component
 @Component
 class SessionManager {
     fun setup(url: String) {
-        Selenide.clearBrowserCookies()
         Selenide.open(url)
-        //TODO -set browser window size
     }
 
     fun tearDown() {
-        Selenide.clearBrowserCookies()
         Selenide.closeWebDriver()
     }
 
     fun waitForPageReady() {
+        //Sleep needed since pages doesn't have state ready.
+        //Some elements (like popups) and its related JS logic may not be ready,
+        //even if element is already visible
         Selenide.sleep(TIMEOUT_LONG.value)
     }
 }

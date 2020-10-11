@@ -9,7 +9,6 @@ plugins {
     kotlin("jvm") version "1.3.61"
 
     id("io.qameta.allure") version "2.8.1"
-    id("com.diffplug.gradle.spotless") version "3.15.0"
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
     id("org.springframework.boot") version "2.2.4.RELEASE"
 }
@@ -64,22 +63,6 @@ dependencies {
         exclude(group = "org.seleniumhq.selenium")
     }
 }
-
-//configure<SpotlessExtension> {
-//    format("misc") {
-//        target("*/src/**/*.kt")
-//        endWithNewline()
-//        trimTrailingWhitespace()
-//    }
-//    kotlin {
-//        target("*/src/**/*.kt")
-//        ktlint("0.29.0")
-//    }
-//    kotlinGradle {
-//        target("**/*gradle.kts")
-//        ktlint("0.29.0")
-//    }
-//}
 
 configure<AllureExtension> {
     val allureResultsDir = "allure-results"
